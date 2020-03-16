@@ -1,12 +1,17 @@
 package com.login.demo;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -37,6 +42,28 @@ public ModelAndView getdetails(@RequestParam int cid)
 	mv.addObject(customers);
 	return mv;
 	}
+@RequestMapping("/customers")
+@ResponseBody
+public List<Customers> getCustomers() 
+{
+	return repo.findAll();
+}
+@RequestMapping("/customers/{cid}")
+@ResponseBody
+public String getCustomers2(@PathVariable("cid") int cid) 
+{
+	return repo.findById(cid).toString();
+}
+@PostMapping("/customers")
+
+public Customers getCustomers3(@RequestBody Customers customers) 
+{
+	repo.save(customers);
+	return customers;
+}
+
+
+
 }
 
 
